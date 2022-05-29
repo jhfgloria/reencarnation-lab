@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/boxopen.ogg-d8b9b79868f4a35c417c9c164e063c5f.oggstr"
+
+[deps]
+
+source_file="res://Audio/boxopen.ogg"
+dest_files=[ "res://.import/boxopen.ogg-d8b9b79868f4a35c417c9c164e063c5f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

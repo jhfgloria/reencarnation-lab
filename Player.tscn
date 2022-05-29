@@ -1,0 +1,217 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/player-sheet.png" type="Texture" id=2]
+[ext_resource path="res://Audio/jumppp22.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Audio/jumpland.wav" type="AudioStream" id=4]
+[ext_resource path="res://Audio/8 Bit Game Entrance.wav" type="AudioStream" id=5]
+[ext_resource path="res://Audio/6.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Audio/steps_platform.ogg" type="AudioStream" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16.5, 25 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 17, 25 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 13, 27.5 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 13, 19.5 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 192, 0, 64, 64 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 64, 64 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "walk",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=13]
+resource_name = "Idle"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -32 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "death"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("AnimatedSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 1.4 ),
+"transitions": PoolRealArray( 1, -0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 0, -32 ), Vector2( 0, -54 ), Vector2( 0, -16 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AnimatedSprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -90.0 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 2.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_death"
+} ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("Sounds/DeathSound")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+
+[node name="KinematicBody2D" type="KinematicBody2D"]
+collision_mask = 17
+script = ExtResource( 1 )
+gravity = 1700.0
+jump_speed = 500.0
+
+[node name="FloorDetection" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -25 )
+shape = SubResource( 1 )
+
+[node name="VasselDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VasselDetector"]
+position = Vector2( 0, -25 )
+shape = SubResource( 11 )
+
+[node name="HazardDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetection"]
+position = Vector2( 0, -27.5 )
+shape = SubResource( 3 )
+
+[node name="RoomDetection" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoomDetection"]
+position = Vector2( 0, -27.5 )
+shape = SubResource( 3 )
+
+[node name="TriggerDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerDetection"]
+position = Vector2( 0, -19.5 )
+shape = SubResource( 4 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -32 )
+frames = SubResource( 10 )
+animation = "walk"
+frame = 1
+speed_scale = 5.0
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 2.0
+anims/Idle = SubResource( 13 )
+anims/death = SubResource( 12 )
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 3 )
+
+[node name="LandingSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 4 )
+volume_db = -15.0
+
+[node name="SpawnSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 5 )
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 6 )
+
+[node name="StepSound" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource( 7 )
+volume_db = -10.0
+pitch_scale = 0.85
+attenuation = 2.0
+
+[connection signal="area_entered" from="VasselDetector" to="." method="_on_VasselDetector_area_entered"]
+[connection signal="area_entered" from="HazardDetection" to="." method="_on_HazardDetection_area_entered"]

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/jumpland.wav-96b34c02f3bebde8da6b22277fb67534.sample"
+
+[deps]
+
+source_file="res://Audio/jumpland.wav"
+dest_files=[ "res://.import/jumpland.wav-96b34c02f3bebde8da6b22277fb67534.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
